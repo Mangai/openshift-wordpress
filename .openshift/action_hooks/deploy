@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# This deploy hook gets executed after dependencies are resolved and the
+# build hook has been run but before the application has been started back
+# up again.  This script gets executed directly, so it could be python, php,
+# ruby, etc.
+
+if [ ! -d ${OPENSHIFT_DATA_DIR}uploads ]; then
+    mkdir ${OPENSHIFT_DATA_DIR}uploads
+fi
+
+if [ ! -d ${OPENSHIFT_DATA_DIR}upgrade ]; then
+    mkdir ${OPENSHIFT_DATA_DIR}upgrade
+fi
+
+if [ ! -d ${OPENSHIFT_DATA_DIR}envato-backups ]; then
+    mkdir ${OPENSHIFT_DATA_DIR}envato-backups
+fi
+
+if [ ! -d $OPENSHIFT_DATA_DIR/blogs.dir ]; then
+    mkdir $OPENSHIFT_DATA_DIR/blogs.dir
+fi
+
+if [ ! -d $OPENSHIFT_DATA_DIR/backup-db ]; then
+    mkdir $OPENSHIFT_DATA_DIR/backup-db
+fi
+
+if [ ! -d $OPENSHIFT_DATA_DIR/cache ]; then
+    mkdir $OPENSHIFT_DATA_DIR/cache
+fi
+
+if [ ! -d $OPENSHIFT_DATA_DIR/backups ]; then
+    mkdir $OPENSHIFT_DATA_DIR/backups
+fi
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/uploads ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/uploads
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}uploads          ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/upgrade ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/upgrade
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}upgrade   		 ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/envato-backups ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/envato-backups
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}envato-backups   ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/blogs.dir ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/blogs.dir
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}blogs.dir        ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/backup-db ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/backup-db
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}backup-db         ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/cache ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/cache
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}cache            ${OPENSHIFT_REPO_DIR}wp-content/
+
+if [ -d ${OPENSHIFT_REPO_DIR}wp-content/backups ]; then
+    rm -Rf ${OPENSHIFT_REPO_DIR}wp-content/backups
+fi
+ln -sf ${OPENSHIFT_DATA_DIR}backups          ${OPENSHIFT_REPO_DIR}wp-content/
